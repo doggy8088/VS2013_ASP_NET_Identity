@@ -1,0 +1,32 @@
+﻿@model MVC_IndividualUserAccounts.Models.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "註冊";
+}
+
+<hgroup>
+    <h2>@ViewBag.Title.</h2>
+    <h3>Associate your @ViewBag.LoginProvider account.</h3>
+</hgroup>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>關聯表單</legend>
+       <p class="text-success">
+            您已成功通過 <strong>@ViewBag.LoginProvider</strong>。
+            請在下面輸入此網站的使用者名稱，並按一下 [註冊] 按鈕完成
+            登入。
+        </p>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+        <br />
+        <input type="submit" class="btn" value="註冊" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

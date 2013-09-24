@@ -1,0 +1,25 @@
+﻿@using Microsoft.Owin.Security
+@model ICollection<AuthenticationDescription>
+
+@if (Model.Count == 0)
+{
+    <div class="message-info">
+        <p>沒有已設定的外部驗證服務。請參閱<a href="http://go.microsoft.com/fwlink/?LinkId=313242">本文</a>，
+以進一步瞭解如何設定此 ASP.NET 應用程式以支援透過外部服務的登入。</p>
+    </div>
+}
+else
+{
+    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+    @Html.AntiForgeryToken()
+    <fieldset id="socialLoginList">
+        <legend>使用其他服務登入。</legend>
+        <p>
+        @foreach (AuthenticationDescription p in Model) {
+            <button type="submit" class="btn" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="使用 @p.Caption 帳戶登入">@p.AuthenticationType</button>
+        }
+        </p>
+    </fieldset>
+    }
+}
